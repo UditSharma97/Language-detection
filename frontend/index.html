@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LinguaFlow - Complete Edition</title>
+
+<!-- Icons + Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#f4f4f4;
+  --surface:#fff;
+  --ink:#000;
+  --bw:2px;
+  --shadow-offset:6px;
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body {
+  background:var(--bg);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  font-family:Inter, sans-serif;
+
+  /* subtle grid */
+  background-image:
+    linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size:20px 20px;
+}
+
+.container {
+  width:100%;
+  max-width:1000px;
+}
+
+/* HEADER */
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:var(--bw) solid var(--ink);
+}
+
+.brand {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.brand-icon {
+  width:40px;
+  height:40px;
+  background:var(--ink);
+  color:var(--surface);
+  display:grid;
+  place-items:center;
+  font-weight:700;
+}
+
+.brand h1 {
+  font-family:"Space Grotesk";
+  font-size:1.7rem;
+  font-weight:700;
+}
+
+.status-badge {
+  font-family:"Space Grotesk";
+  padding:6px 12px;
+  border:var(--bw) solid var(--ink);
+  box-shadow:2px 2px 0 var(--ink);
+  background:var(--surface);
+  font-weight:700;
+}
+
+/* MAIN CARD */
+.card {
+  background:var(--surface);
+  border:var(--bw) solid var(--ink);
+  box-shadow:var(--shadow-offset) var(--shadow-offset) 0 var(--ink);
+  display:flex;
+  flex-direction:column;
+}
+
+/* CONTROLS BAR */
+.controls {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 24px;
+  border-bottom:var(--bw) solid var(--ink);
+  background:#f9f9f9;
+}
+
+.lang-group { display:flex; gap:10px; align-items:center; }
+.lang-select {
+  appearance:none;
+  border:none;
+  background:transparent;
+  font-family:"Space Grotesk";
+  font-size:1rem;
+  font-weight:700;
+  padding-right:18px;
+  cursor:pointer;
+}
+
+.swap-btn {
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:var(--bw) solid var(--ink);
+  background:white;
+  cursor:pointer;
+}
+
+/* PANELS */
+.panels {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:360px;
+}
+
+.panel {
+  padding:24px;
+  position:relative;
+}
+
+.panel.source {
+  border-right:var(--bw) solid var(--ink);
+}
+
+textarea {
+  width:100%;
+  height:100%;
+  border:none;
+  resize:none;
+  outline:none;
+  background:transparent;
+  font-size:1.45rem;
+  line-height:1.6;
+}
+
+.meta {
+  position:absolute;
+  right:20px;
+  bottom:16px;
+  font-family:"Space Grotesk";
+  font-weight:600;
+  color:#444;
+}
+
+/* DETECTION BAR */
+.detect-searchbar {
+  margin-top:16px;
+  padding:10px 14px;
+  border:2px solid var(--ink);
+  background:var(--surface);
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:"Space Grotesk";
+  font-size:0.95rem;
+  box-shadow:3px 3px 0 var(--ink);
+}
+.detect-searchbar .conf {
+  margin-left:auto;
+  font-weight:700;
+  color:#333;
+}
+
+/* PRESETS SECTION */
+.preset-row {
+  margin-top:16px;
+  padding:14px 22px;
+  border-top:var(--bw) solid var(--ink);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:var(--surface);
+}
+
+.preset-title {
+  font-family:"Space Grotesk";
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.preset-buttons {
+  display:flex;
+  gap:10px;
+}
+
+.preset-btn {
+  border:1px solid var(--ink);
+  background:var(--surface);
+  padding:6px 12px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:0.9rem;
+}
+
+.preset-btn:hover {
+  background:var(--ink);
+  color:var(--surface);
+}
+
+/* ACTION ROW */
+.action-row {
+  padding:20px 24px;
+  display:flex;
+  justify-content:flex-end;
+  border-top:var(--bw) solid var(--ink);
+}
+
+.translate-btn {
+  background:var(--ink);
+  color:var(--surface);
+  padding:12px 30px;
+  border:2px solid var(--ink);
+  font-weight:800;
+  font-family:"Space Grotesk";
+  cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width:800px){
+  .panels { grid-template-columns:1fr; }
+  .panel.source { border-right:none; border-bottom:var(--bw) solid var(--ink); }
+  .preset-row { flex-direction:column; align-items:flex-start; }
+  .preset-buttons { flex-wrap:wrap; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">LF</div>
+    <h1>LINGUAFLOW</h1>
+  </div>
+  <div class="status-badge">SYSTEM READY</div>
+</header>
+
+<div class="card">
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="lang-group">
+      <select id="source-mode" class="lang-select">
+        <option value="detect">Detect Language</option>
+        <option value="en">English</option>
+        <option value="de">German</option>
+      </select>
+    </div>
+
+    <button class="swap-btn"><i class="fas fa-arrow-right-arrow-left"></i></button>
+
+    <div class="lang-group">
+      <select id="targetLang" class="lang-select">
+        <option value="es">Spanish (ES)</option>
+        <option value="fr">French (FR)</option>
+        <option value="hi">Hindi (HI)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels">
+
+    <!-- LEFT PANEL -->
+    <div class="panel source">
+      <textarea id="sourceText" placeholder="Type or click a preset..." maxlength="5000"></textarea>
+      <div class="meta" id="charCount">0 / 5000</div>
+
+      <!-- DETECTION BAR -->
+      
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="panel target">
+      <textarea id="targetText" placeholder="Translation will appear here..." readonly></textarea>
+    </div>
+
+  </div>
+
+  <!-- PRESETS (now below panels, no overlap) -->
+  <div class="preset-row">
+    <div class="preset-title" id="presetToggle">
+      <i class="fas fa-chevron-down"></i>
+      <span>Load Preset</span>
+    </div>
+
+    <div class="preset-buttons" id="presetButtons">
+      <button class="preset-btn" data-text="Architecture is the learned game, correct and magnificent, of forms assembled in the light.">Architecture</button>
+      <button class="preset-btn" data-text="To be or not to be, that is the question.">Hamlet</button>
+      <button class="preset-btn" data-text="The quick brown fox jumps over the lazy dog.">Pangram</button>
+    </div>
+  </div>
+
+  <!-- ACTION -->
+  <div class="action-row">
+    <button class="translate-btn" id="translateBtn">TRANSLATE</button>
+  </div>
+
+</div><!-- card -->
+</div><!-- container -->
+
+<script>
+const API = "http://127.0.0.1:8000";
+
+const sourceText = document.getElementById("sourceText");
+const targetText = document.getElementById("targetText");
+const charCount = document.getElementById("charCount");
+
+const detLang = document.getElementById("detLang");
+const detConf = document.getElementById("detConf");
+
+const translateBtn = document.getElementById("translateBtn");
+const targetLang = document.getElementById("targetLang");
+
+/* Convert langid confidence safely */
+function scoreToPercent(score){
+  if(typeof score === "number" && score >= 0 && score <= 1){
+    return Math.round(score * 100);
+  }
+  const s = 1 / (1 + Math.exp(-score / 10));
+  return Math.round(s * 100);
+}
+
+/* Update char counter */
+sourceText.addEventListener("input", ()=>{
+  charCount.textContent = `${sourceText.value.length} / 5000`;
+});
+
+/* Main Auto-Detect + Auto-Translate */
+async function detectThenTranslate(text){
+  detLang.textContent = "Detecting...";
+  detConf.textContent = "";
+  targetText.value = "Processing...";
+
+  try{
+    /* 1) Detect */
+    const d = await fetch(API + "/detect", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({text})
+    }).then(r=>r.json());
+
+    const lang = d.language || "??";
+    const conf = scoreToPercent(d.confidence);
+
+    detLang.textContent = lang.toUpperCase();
+    detConf.textContent = conf + "%";
+
+    /* 2) Translate */
+    const t = await fetch(API + "/translate", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({text, target_lang:targetLang.value})
+    }).then(r=>r.json());
+
+    targetText.value = t.translated_text || "Translation error.";
+  }
+  catch(err){
+    targetText.value = "Error connecting to backend.";
+  }
+}
+
+/* Manual translate button */
+translateBtn.addEventListener("click", ()=>{
+  const text = sourceText.value.trim();
+  if(!text) return alert("Enter text first.");
+  detectThenTranslate(text);
+});
+
+/* PRESET BUTTONS (Auto-Detect + Auto-Translate) */
+document.getElementById("presetButtons").addEventListener("click",(e)=>{
+  const btn = e.target.closest(".preset-btn");
+  if(!btn) return;
+  const text = btn.getAttribute("data-text");
+  sourceText.value = text;
+  charCount.textContent = `${sourceText.value.length} / 5000`;
+  detectThenTranslate(text);
+});
+</script>
+
+</body>
+</html>
